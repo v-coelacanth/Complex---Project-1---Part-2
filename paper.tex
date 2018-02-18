@@ -52,6 +52,16 @@
 
 
 \documentclass[conference]{IEEEtran}
+
+\usepackage{graphicx}	
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{subcaption}
+ \usepackage{float}
+ \usepackage{wrapfig}
+
+
+
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -518,6 +528,43 @@ Depending on the value of $R$, the logistic map will generate a population size 
 
 
 \section{Methods and Results}
+
+For this project, we used the  model of growth define in INSERT REFERENCE that uses an logicistic growth model on a lattice of organisms coupled with influence from the entire population of organisms.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
+\begin{eqnarray}
+x_{i, n+1} = (1 - \epsilon) f_i(x_{i,n}) + \epsilon m_n, \ \ \ (i=1, 2, \ldots N)
+\end{eqnarray}
+Here $N$ is the number of time steps, $n$ is the current time step (or generation), and $\epsilon$ is the coupling strength of the model to the entire lattice of organisms.   Here the the local growth dynamics of each population $i$ is defined by 
+\begin{eqnarray}
+f_i(x_{i,n}) = r_i x_{i,n} (1 - {x_{i,n} \over K})
+\end{eqnarray}
+Here $r_i$ is the reproductive fitness of population $i$ and $K$ is the carrying capacity.    
+
+We model the state of the entire lattice at time $n$ is an average of the states of all the populations.  This is called the instantaneous mean field and defined to be
+\begin{eqnarray}
+M_n = { 1 \over N} \sum _{j=1}^N x_{j,n}
+\end{eqnarray}
+
+
+ The mean-field $m_n$ is a measure of how the individual populations are growing at any time-step $j$.  It is defined to be 
+ \begin{eqnarray}
+ m_n = {1 \over N} \sum_j^N f_j(x_{j,n})
+\end{eqnarray}
+
+The influence of $m_i$ on the entire system is quantified by the parameter $\epsilon$, the coupling strength.  
+ 
+To do our simulation,  we set the carrying capacity $K$ to be 100 for all populations $i$, the number of populations $N = 1000$ and use $10000$ time steps.   We set the initial population size $x_i, 0$ to be $1$.   We also select a random fitness $r_i$ for each population $i$.   
+
+
+
+% Figure for part 2
+ \begin{figure}[H]
+ \centering
+    \includegraphics[width=90mm]{prettypicture}
+    
+    \caption{ Return map for selected values of  the global coupling strength $\epsilon$:  $\epsilon =0$ (red), $\epsilon = 0.1$ (blue), $\epsilon = 0.25$ (orange), $\epsilon = 0.225$ (aqua), $\epsilon = 0.25$ (dark green), $\epsilon = 3 $ (stars) and $\epsilon = 4$ (black)}
+\end{figure} 
+
+
 
 
 
