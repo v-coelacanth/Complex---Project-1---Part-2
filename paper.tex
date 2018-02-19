@@ -59,6 +59,7 @@
 \usepackage{subcaption}
  \usepackage{float}
  \usepackage{wrapfig}
+ 
 
 
 
@@ -416,7 +417,7 @@ Define the population size relative to the carrying capacity as  $x_t = n_t / k$
 \begin{eqnarray}
 x(t+1) = x_{t+1} = R x_t (1 - x_t), \ \ \ \ \  t=0, 1, 2, \ldots . 
 \end{eqnarray}
-This is the logistic map as defined in [2].  (In what follows, we will refer to $x_t$ as the population size, with the understanding that it will always be the ratio of the actual population size to the carrying capacity.)
+This is the logistic map as defined in \cite{Mitchell}  (In what follows, we will refer to $x_t$ as the population size, with the understanding that it will always be the ratio of the actual population size to the carrying capacity.)
 Depending on the value of $R$, the logistic map will generate a population size that is stable, periodic, or chaotic over time.  The behavior of the logistic map can vary a great deal with small changes in $x_0$.  This phenomenon is known as {\it sensitive dependence on initial conditions}, where small changes in the input lead to large changes in the output. 
 
 
@@ -529,7 +530,35 @@ Depending on the value of $R$, the logistic map will generate a population size 
 
 \section{Methods and Results}
 
-For this project, we used the  model of growth define in INSERT REFERENCE that uses an logicistic growth model on a lattice of organisms coupled with influence from the entire population of organisms.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
+% Figure for part 2
+% \begin{figure}[H]
+ %\begin{subfigure}[b]{0.4\columnwidth}
+   % \centering
+    %\includegraphics[width=\textwidth]{figure1ab}
+     %\caption{ LEFT}
+ %   \label{figure1ab}
+%\end{subfigure}
+%
+%\begin{subfigure}[b]{0.4\columnwidth}
+ %\includegraphics[width=\textwidth]{figure1cd}
+   % \caption{ RIGHT)}
+ %\label{figure1cd}
+ %\end{subfigure}
+ %\caption{A big ole figure}
+% \end{figure} 
+
+
+\begin{figure}[H]
+\centering
+ \includegraphics[width=90mm]{figure1abcd_combined}
+    
+   \caption{ SOME CAPTION}
+ \label{figure1abcd}
+\end{figure} 
+
+
+\subsection{The Walker Model}
+For this project, we used the  model of growth define in \cite{Walker}  that uses an logistic growth model on a lattice of organisms coupled with influence from the entire population of organisms.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
 \begin{eqnarray}
 x_{i, n+1} = (1 - \epsilon) f_i(x_{i,n}) + \epsilon m_n, \ \ \ (i=1, 2, \ldots N)
 \end{eqnarray}
@@ -554,17 +583,18 @@ The influence of $m_i$ on the entire system is quantified by the parameter $\eps
  
 To do our simulation,  we set the carrying capacity $K$ to be 100 for all populations $i$, the number of populations $N = 1000$ and use $10000$ time steps.   We set the initial population size $x_i, 0$ to be $1$.   We also select a random fitness $r_i$ for each population $i$.   
 
-
+In figure \ref{prettypicture}, we show the return maps for a selection of coupling strengths $\epsilon$.  
 
 % Figure for part 2
  \begin{figure}[H]
  \centering
-    \includegraphics[width=90mm]{prettypicture}
+    \includegraphics[width=100mm]{prettypicture}
     
     \caption{ Return map for selected values of  the global coupling strength $\epsilon$:  $\epsilon =0$ (red), $\epsilon = 0.1$ (blue), $\epsilon = 0.25$ (orange), $\epsilon = 0.225$ (aqua), $\epsilon = 0.25$ (dark green), $\epsilon = 3 $ (stars) and $\epsilon = 4$ (black)}
+ \label{prettypicture}
 \end{figure} 
 
-
+This return map was using equations LIST EQUATION NUMBERS  in Python using Matplotlib.  
 
 
 
@@ -609,11 +639,23 @@ Vanessa did this and Kellin did that.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
+{\bf CHECK THAT BIBITEMS HAVE CORRECT FORMAT }
 \begin{thebibliography}{1}
+  
+  \bibitem{JIDT}
+  JIDT: An information-theoretic toolkit for studying the dynamics of complex systems
+Joseph T. Lizier  https://arxiv.org/abs/1408.3270
+FIX THIS
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{Walker} Evolutionary Transitions and Top-Down Causation
+
+
+\bibitem{Mitchell} ]M. Mitchell, Complexity. Oxford: Oxford University Press, 2011, pp. 27-37.
+
+\bibitem{Flake} G. Flake, The computational beauty of nature. Cambridge, Mass.: The MIT Press, 2011, pp. 139-151.
+
+\bibitem{Walker} Evolutionary Transitions and Top-Down Causation
+
 
 \end{thebibliography}
 
