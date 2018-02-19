@@ -409,18 +409,31 @@ The abstract goes here.
 \section{Introduction}
 % no \IEEEPARstart
 
-{\bf Introduction } We model population growth when birth rate, death rate, and carrying capacity are all fixed.  Define $k$ to be the carrying capacity and $n_t$ to be size of the population at time $t$. Then the size of the population at generation $t$ is modeled by 
-$
-n_{t+1} = (birthrate - deathrate) (k n_t - n_t^2) / k,$ \  $\ t=0, 1, 2, \ldots$ .
+{\bf Introduction } 
+Evolution proceeds by emergence of new higher level entities.   How information is stored and processed is a driver of this process \cite{Walker}.   For instance, the emergence of epigenetic inheritance provided a competitive advantage through diversification.  
+In this paper, we look at the interaction between organisms as individual  populations and organisms considered as a group of populations. 
 
-Define the population size relative to the carrying capacity as  $x_t = n_t / k$ and define $R = birthrate - deathrate$.  Then we  get the following equation for $x_t$: 
+For individual populations, we assume birth rate, death rate, and  carrying capacity are all fixed.  Define $k$ to be the carrying capacity of a population and $n_t$ to be size of the population at time $t$. Then the size of the population at generation $t$ is modeled by 
 \begin{eqnarray}
-x(t+1) = x_{t+1} = R x_t (1 - x_t), \ \ \ \ \  t=0, 1, 2, \ldots . 
+n_{t+1} = (\textnormal{birthrate} - \textnormal{deathrate}) (k n_t - n_t^2) / k 
 \end{eqnarray}
-This is the logistic map as defined in \cite{Mitchell}  (In what follows, we will refer to $x_t$ as the population size, with the understanding that it will always be the ratio of the actual population size to the carrying capacity.)
-Depending on the value of $R$, the logistic map will generate a population size that is stable, periodic, or chaotic over time.  The behavior of the logistic map can vary a great deal with small changes in $x_0$.  This phenomenon is known as {\it sensitive dependence on initial conditions}, where small changes in the input lead to large changes in the output. 
+If we define the population size relative to the carrying capacity as  $x_t = n_t / k$ and define the reproductive fitness  $r = birthrate - deathrate$.  Then we  get the following equation for $x_t$: 
+\begin{eqnarray}
+x(t+1) = x_{t+1} = r  x_t (1 - x_t), \ \ \ \ \  t=0, 1, 2, \ldots . 
+\label{logistic}
+\end{eqnarray}
+This is the logistic map as defined in \cite{Mitchell}.  In what follows, we will refer to $x_t$ as the population size, with the understanding that it will always be the ratio of the actual population size to the carrying capacity
+
+In \cite{Walker}, the authors investigate information flow between higher and lower levels of organization, between individuals of a population and the population considered as a whole. 
+They study a model that consists of a population of individual populations and examine the direction of the causal information transfer, where 
+"non-trivial collective behavior is associated with the degree to which local elements receive information from the global network." \cite{Walker}
+
+Their model, a lattice of  globally coupled logistic maps, is used to investigate the circumstances under which nontrivial collective behavior occurs . It shows how a reversal in the dominant direction of information flow from bottom-up to top-down is correlated with the emergence of collective behavior of the populations.  
+
+{\it FROM INSTRUCTIONS One to two paragraphs that summarize the purpose, methods and analysis of the Walker paper and how you extend that analysis. }
 
 
+KELLIN:  State HOW DO WE EXTEND THIS ANALYSIS?  
 
 
 % You must have at least 2 lines in the paragraph with the drop letter
@@ -530,58 +543,64 @@ Depending on the value of $R$, the logistic map will generate a population size 
 
 \section{Methods and Results}
 
-% Figure for part 2
-% \begin{figure}[H]
- %\begin{subfigure}[b]{0.4\columnwidth}
-   % \centering
-    %\includegraphics[width=\textwidth]{figure1ab}
-     %\caption{ LEFT}
- %   \label{figure1ab}
-%\end{subfigure}
-%
-%\begin{subfigure}[b]{0.4\columnwidth}
- %\includegraphics[width=\textwidth]{figure1cd}
-   % \caption{ RIGHT)}
- %\label{figure1cd}
- %\end{subfigure}
- %\caption{A big ole figure}
-% \end{figure} 
+\subsection{Sensitive Dependence on Initial Conditions for the Logistic Map}
+
+Depending on the value of the reproductive fitness $r$, the logistic map will generate a population size that is stable, periodic, or chaotic over time.  The behavior of the logistic map can vary a great deal with small changes in $x_0$.  This phenomenon is known as {\it sensitive dependence on initial conditions}, where small changes in the input lead to large changes in the output.  In figure \ref{figure1abcd}, we plot four times series showing population versus time for $50$ time steps.   
+%r, initial x values and cross entropy
+% a = 0.7522
+% b = 
+% ab mutual information  0.7522
+
+%cd mutual information   0.0471
+The mutual information measures the dependence of one random variable on another random variable.   For two random variables $X$ and $Y$, we define the mutual information to be
+\begin{eqnarray}
+I(X,Y) = \sum_{y \in Y} \sum_ {x \in X} p(x,y) { \log p(x,y) \over {\log p(x)  \log p(y)} }
+\end{eqnarray}
+When two random variables are independent, their mutual information is $0$.  
+
+We computed the mutual information for the time series in figure \ref{figure1abcd}(a) and figure \ref{figure1abcd}(b).  
+The mutual information for the periodic maps in figure \ref{abcd_combined}(a)  is $0.7522$ and the mutual information for the chaotic maps it $0.471$.   This makes sense because after $t=13$, for the periodic maps, you can certainly determine the value one map by knowing the other.  It also makes sense that the mutual information for the chaotic maps should be close to zero because they are chaotic.  
+
+To compute the mutual information, we produced values that could be binned by multiplying each population size by 100 and rounding to the nearest integer.  Then we used the JIDT AutoAnalyzer \cite{JIDT} to compute the mutual information.    To generate figure \ref{figure1abcd} we used Matlab \cite{Matlab} with logistic map equation from \cite{Mitchell}.  
+
+MISSING {\it From instructions:  You might follow Flake?s suggestion of predicting how far into the future two populations are on the same side of 50\% of carrying capacity and use a binary representation. You might use JIDT?s kernel estimator. Explain your choice. }
+
 
 
 \begin{figure}[H]
 \centering
  \includegraphics[width=90mm]{figure1abcd_combined}
     
-   \caption{ SOME CAPTION}
+  \caption{ Population growth over time showing sensitive dependence on initial conditions.  The mutual information for the periodic map (a) is 0.7522.  The mutual information for the chaotic map (b) is 0.0471.}
  \label{figure1abcd}
 \end{figure} 
 
-
 \subsection{The Walker Model}
-For this project, we used the  model of growth define in \cite{Walker}  that uses an logistic growth model on a lattice of organisms coupled with influence from the entire population of organisms.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
+For this project, we used the  model of coupled growth defined in \cite{Walker}. This model uses a logistic growth model on a lattice of populations coupled with influence from the entire population of populations.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
 \begin{eqnarray}
 x_{i, n+1} = (1 - \epsilon) f_i(x_{i,n}) + \epsilon m_n, \ \ \ (i=1, 2, \ldots N)
+\label{coupling}
 \end{eqnarray}
 Here $N$ is the number of time steps, $n$ is the current time step (or generation), and $\epsilon$ is the coupling strength of the model to the entire lattice of organisms.   Here the the local growth dynamics of each population $i$ is defined by 
 \begin{eqnarray}
 f_i(x_{i,n}) = r_i x_{i,n} (1 - {x_{i,n} \over K})
+\label{individual}
 \end{eqnarray}
 Here $r_i$ is the reproductive fitness of population $i$ and $K$ is the carrying capacity.    
 
 We model the state of the entire lattice at time $n$ is an average of the states of all the populations.  This is called the instantaneous mean field and defined to be
 \begin{eqnarray}
 M_n = { 1 \over N} \sum _{j=1}^N x_{j,n}
+\label{bigM}
 \end{eqnarray}
-
-
  The mean-field $m_n$ is a measure of how the individual populations are growing at any time-step $j$.  It is defined to be 
  \begin{eqnarray}
- m_n = {1 \over N} \sum_j^N f_j(x_{j,n})
+ m_n = {1 \over N} \sum_{j=1}^N f_j(x_{j,n})
+ \label{littlem}
 \end{eqnarray}
-
 The influence of $m_i$ on the entire system is quantified by the parameter $\epsilon$, the coupling strength.  
  
-To do our simulation,  we set the carrying capacity $K$ to be 100 for all populations $i$, the number of populations $N = 1000$ and use $10000$ time steps.   We set the initial population size $x_i, 0$ to be $1$.   We also select a random fitness $r_i$ for each population $i$.   
+To do our simulation,  we set the carrying capacity $K$ to be 100 for all populations $i$, the number of populations $N = 1000$ and use $10000$ time steps.   We set the initial population size $x_i, 0$ to be $1$.   We also generated a random fitness $r_i$ for each population $i$.   
 
 In figure \ref{prettypicture}, we show the return maps for a selection of coupling strengths $\epsilon$.  
 
@@ -590,11 +609,27 @@ In figure \ref{prettypicture}, we show the return maps for a selection of coupli
  \centering
     \includegraphics[width=100mm]{prettypicture}
     
-    \caption{ Return map for selected values of  the global coupling strength $\epsilon$:  $\epsilon =0$ (red), $\epsilon = 0.1$ (blue), $\epsilon = 0.25$ (orange), $\epsilon = 0.225$ (aqua), $\epsilon = 0.25$ (dark green), $\epsilon = 3 $ (stars) and $\epsilon = 4$ (black)}
+    \caption{ Return map for selected values of  the global coupling strength $\epsilon$:  $\epsilon =0$ (magenta), $\epsilon = 0.075$ (red), $\epsilon = 0.1$ (blue), $\epsilon = 0.25$ (orange), $\epsilon = 0.225$ (aqua), $\epsilon = 0.25$ (dark green), $\epsilon = 3 $ (stars) and $\epsilon = 4$ (black)}
  \label{prettypicture}
 \end{figure} 
 
-This return map was using equations LIST EQUATION NUMBERS  in Python using Matplotlib.  
+To build the return map, equations \ref{coupling},  \ref{individual}, \ref{bigM},  and \ref{littlem} were implemented  in Python using Numpy \cite{numpy} and Matplotlib \cite{matplotlib}.   The return map shows that when the coupling $\epsilon = 0$,  (magenta) there is not much change in how the overall state of the populations changes from time step to time step.  That is, populations  act as isolated populations.   When $\epsilon > 0$, we see a variety of behaviors. 
+
+It should be noted that there is quite a bit of dependence on the initial fitness values $r_i$   In different runs of the return map, $\epsilon = 0.25$ (dark green) and and $\epsilon = 0.225$ (aqua) populations sometimes form loops and there can be some scatter instead of two fixed points when $\epsilon = 0.3$.  Overall, we see that coupling strengths $0, 0.075, 0.1$ and $0.4$ produce predictably shaped regions, while there can be variation in the regions produced by $\epsilon = 0.2,  \epsilon = 0.225$ and $\epsilon = 0.3$. 
+
+% In figure \ref{eyeglasses}, we see another possible return map.  
+
+%\begin{figure}[H]
+%\centering
+  %  \includegraphics[width=100mm]{eyeglasses}
+    
+   % \caption{ Another return map for selected values of  the global coupling strength $\epsilon$:  $\epsilon =0$ (red), $\epsilon = 0.1$ (blue), $\epsilon = 0.25$ (orange), $\epsilon = 0.225$ (aqua), $\epsilon = 0.25$ (dark green), $\epsilon = 3 $ (stars) and $\epsilon = 4$ (black)}
+ %\label{eyeglasses}
+%\end{figure} 
+
+While return maps that look like figure \ref{prettypicture} seemed to occur more often, it would be interesting to look at the distributions of fitness values $r_i$ that produce the more exotic return maps.  This is outside of the scope of this paper.
+
+
 
 
 
@@ -608,13 +643,9 @@ This return map was using equations LIST EQUATION NUMBERS  in Python using Matpl
 
 
 % use section* for acknowledgment
-\section*{Contributions}
+\section{Contributions}
 
-
-Vanessa did this and Kellin did that.   
-
-
-
+While each of us touched all sections of this paper, Vanessa Job was the primary author of the introduction and the sections about figures 1 and 2, as well as the code that produced the the results in these sections.   Kellin Rumsey was the primary author of the sections that produced figures 3 and 4, as well as the code that produced the results in these sections.  
 
 
 % trigger a \newpage just before the given reference
@@ -643,19 +674,20 @@ Vanessa did this and Kellin did that.
 \begin{thebibliography}{1}
   
   \bibitem{JIDT}
-  JIDT: An information-theoretic toolkit for studying the dynamics of complex systems
-Joseph T. Lizier  https://arxiv.org/abs/1408.3270
-FIX THIS
+  Lizier, Joseph T. 
+  JIDT: An information-theoretic toolkit for studying the dynamics of complex systems, {\it Frontiers in Robotics and AI}, 1:11, 2014. [Online]  
+  https://github.com/jlizier/jidt
 
 \bibitem{Walker} Evolutionary Transitions and Top-Down Causation
-
 
 \bibitem{Mitchell} ]M. Mitchell, Complexity. Oxford: Oxford University Press, 2011, pp. 27-37.
 
-\bibitem{Flake} G. Flake, The computational beauty of nature. Cambridge, Mass.: The MIT Press, 2011, pp. 139-151.
+\bibitem{Flake} G. Flake, The computational beauty of nature. Cambridge, Mass.:{\it  The MIT Press}, 2011, pp. 139-151.
 
-\bibitem{Walker} Evolutionary Transitions and Top-Down Causation
+\bibitem{numpy} Stéfan van der Walt, S. Chris Colbert and Gaël Varoquaux. The NumPy Array: A Structure for Efficient Numerical Computation, {\it Computing in Science and Engineering,} 13, 22-30 (2011),
 
+\bibitem{matplotlib} Hunter, J.D. {\t Matplotlib: A 2D graphics environment}.  {\it Computing in Science and Engineering}, Vol. 0, Num. 3, pp 90-95.  (2007)[Online]
+Available: https://matplotlib.org
 
 \end{thebibliography}
 
