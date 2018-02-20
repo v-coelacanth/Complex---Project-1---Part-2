@@ -617,6 +617,17 @@ In figure \ref{prettypicture}, we show the return maps for a selection of coupli
 
 To build the return map, equations \ref{coupling},  \ref{individual}, \ref{bigM},  and \ref{littlem} were implemented  in Python using Numpy \cite{numpy} and Matplotlib \cite{matplotlib}.   The return map shows that when the coupling $\epsilon = 0$,  (magenta) there is not much change in how the overall state of the populations changes from time step to time step.  That is, populations  act as isolated populations.   When $\epsilon > 0$, we see a variety of behaviors. 
 
+\begin{figure*}[!t]
+\centering
+\subfloat[]{\includegraphics[width=3.5in]{Fig4a}%
+\label{te}}
+\hfill
+\subfloat[]{\includegraphics[width=3.5in]{Fig4b}%
+\label{fig_second_case} }
+\caption{(a) Top-down, $T_{M\rightarrow X}$ (solid), and bottom-up, $T_{X\rightarrow M}$ (dashed), causal information transfer as a function of the global coupling parameter $\epsilon$ for coupled logistic maps. (b) The difference (Top-down minus bottom-up) in causal information transfer for $30$ coupled systems as well as the mean as a function of $\epsilon$ (dashed). Vertical line at $\epsilon = 0.3$ illustrates the directional reversal of causal information transfer.}
+\label{te_avg}
+\end{figure*}
+
 It should be noted that there is quite a bit of dependence on the initial fitness values $r_i$   In different runs of the return map, $\epsilon = 0.25$ (dark green) and and $\epsilon = 0.225$ (aqua) populations sometimes form loops and there can be some scatter instead of two fixed points when $\epsilon = 0.3$.  Overall, we see that coupling strengths $0, 0.075, 0.1$ and $0.4$ produce predictably shaped regions, while there can be variation in the regions produced by $\epsilon = 0.2,  \epsilon = 0.225$ and $\epsilon = 0.3$. 
 
 % In figure \ref{eyeglasses}, we see another possible return map.  
@@ -631,31 +642,35 @@ It should be noted that there is quite a bit of dependence on the initial fitnes
 
 While return maps that look like figure \ref{prettypicture} seemed to occur more often, it would be interesting to look at the distributions of fitness values $r_i$ that produce the more exotic return maps.  This is outside of the scope of this paper.
 
-\begin{figure*}[!t]
-\centering
-\subfloat[]{\includegraphics[width=3.5in]{Fig4a}%
-\label{te} }
-
-\hfill
-\subfloat[]{\includegraphics[width=3.5in]{Fig4b}%
-\label{fig_second_case} }
-\caption{(a) Top-down, $T_{M\rightarrow X}$ (solid), and bottom-up, $T_{X\rightarrow M}$ (dashed), causal information transfer as a function of the global coupling parameter $\epsilon$ for coupled logistic maps. (b) The difference (Top-down minus bottom-up) in causal information transfer for $30$ coupled systems as well as the mean as a function of $\epsilon$ (dashed). Vertical line at $\epsilon = 0.3$ illustrates the directional reversal of causal information transfer.}
-\label{te_avg}
-\end{figure*}
 
 \subsection{Direction of Information Flow}
 \noindent In order to assess that direction of information flow, from Global to Local scales and vice versa, the authors in \cite{Walker} take advantage of {\it Transfer Entropy}. Transfer Entropy is defined mathematically in \cite{Schreiber} as
 $$T^{(k)}_{Y \rightarrow X} = \sum_n p(x_{n+1}, x_n^{(k)}, y_n^{(k)}) \log \left[ \frac{p(x_{n+1}|x_n^{(k)}, y_n^{(k)})}{p(x_{n+1}|x_n{(k)}}\right]$$
 Where $x_n^{(k)}$ is an embedded state in the $k$-dimensional phase spate defined as $x_n^{(k)} = (x_n, \cdots, x_{n-k+1})$. \\
+\begin{figure}[t]
+\centering
+ \includegraphics[width=90mm]{Fig5}
+    
+  \caption{Population trajectories for an individual (blue) and the mean (red) over 100 time steps. Dynamics are shown for $\epsilon = 0.075$ ($T_{X\rightarrow M} > T_{M\rightarrow X}$), $\epsilon = 0.3$ ($T_{X\rightarrow M} = 0 = T_{M\rightarrow X}$) and $\epsilon = 0.4$ ($T_{X\rightarrow M} < T_{M\rightarrow X}$. }
+ \label{timeseries}
+\end{figure}
 
 
 
 \noindent Although Transfer Entropy is a fine candidate to estimate directionality of this coupling, recent work has focused on improving estimation methods. In their 2015 paper, Gencaga et. al propose new "statistically robust" methodology to estimate Transfer Entropy \cite{recipe}. Relevant here, is the considerable improvement for continuous processes, where discretizing the data can lead to a distortion in the underlying probability distribution. For this reason, we choose to use the state of the art TransferEntropy package in R and claim based on this work that these estimates of Transfer Entropy are to be preferred. \\
+x
 
 \noindent In Figure \ref{te}, we see qualitatively similar results as to what was demonstrated in \cite{Walker}. The quantitative difference in the location and magnitude of the peaks can be attributed to either chance or estimation method. For low values of the global coupling parameter ($\epsilon$), we see information flow is stronger in the bottom-down direction (from local to global scale). As $\epsilon$ increases the direction reverses, and top-down causation begins to dominate. We note again that we are qualitatively in agreement with the previous work \cite{Walker}. There is however a subtle quantitative difference in our results. It appears from Figure \ref{te} that this reversal of causation occurs at a value of $\epsilon = 0.3$. In an effort to analyze this claim more rigorously, we repeat the entire simulation and estimation procedure $30$ times. The right panel of Figure \ref{te_avg} shows the difference $T_{M\rightarrow X} - T_{X \rightarrow M}$ as a function of $\epsilon$ for 30 different simulations. The mean is also plotted, and we can see clearly that this reversal of information flow occurs right at $\epsilon = 0.3$. Finally, we note that this result is intuitively satisfactory since it coincides with the black stars in Figure \ref{prettypicture}, the value of $\epsilon$ for which the system is completely synchronized.
 
 \subsection{Additional Analysis}
-Here we continue our exploration of the relationship between local and global population dynamics.
+\noindent Here we continue our exploration of the relationship between local and global population dynamics. We will use the metric displayed in Figure \ref{te_avg} $T_{M\rightarrow X} - T_{X\rightarrow M}$ to discuss the direction of causal inforamtion transfer between the two scales. We break our discussion into 3 cases.
+\begin{itemize}
+\item[i)] For small values of the global coupling strength, say $\epsilon < 0.3$, Figure \ref{te_avg} shows that our metric takes negative values. This indicates that causal information is flowing from the local to the global scale. The top row of Figure \ref{timeseries} shows that the individual population is chaotic, but the mean trajectory oscilates roughly between 3 values ($0.4$, $0.6$ and $0.6$). This is what gives the red points their behavior in Figure \ref{prettypicture}.
+\item[ii)] For $\epsilon \approx 0.3$, the system synchronizes. In fact, we can compute the correlation between the trajectories in the middle row of Figure \ref{timeseries}, and see that it is nearly equal to one (0.9879)$. Based on Figure \ref{prettypicture} we sould expect these series to oscillate between precisely two values. This particular run had four attractors (black stars) instead of two.
+\item[iii)] For large values of the global coupling strength, the global dynamics begin to dominate. There is still a near perfect correlation between $M$ and $X$, but now even the global dynamics (the mean) behaves chaotically.
+\end{itemize}
+For small values of the Global Coupling Strength, say $\epsilon < 0.3$, this metric takes negative values, indicating that information is flowing from the local to the global scale. The top row of Figure \ref{timeseires} shows that the individual populations appear chaotic, but the mean trajectory appears periodic. This is similar to the behavior illus
+
 
 
 \section{Extra Credit}  Extra credit.  
