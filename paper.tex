@@ -389,7 +389,8 @@ knrumsey@unm.edu}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+We investigate information flow between higher and lower levels flow of information in models of population growth. 
+ We attempt to replicate the results found in \cite{Walker} and DO OTHER STUFF. 
 \end{abstract}
 
 % no keywords
@@ -418,7 +419,7 @@ In this paper, we look at the interaction between organisms as individual  popul
 \begin{eqnarray}
 n_{t+1} = (\textnormal{birthrate} - \textnormal{deathrate}) (k n_t - n_t^2) / k 
 \end{eqnarray}
-If we define the population size relative to the carrying capacity as  $x_t = n_t / k$ and define the reproductive fitness  $r = birthrate - deathrate$.  Then we  get the following equation for $x_t$: 
+If we define the population size relative to the carrying capacity as  $x_t = n_t / k$ and define the reproductive fitness  $r = birthrate - deathrate$, then we  get the following equation for $x_t$: 
 \begin{eqnarray}
 x(t+1) = x_{t+1} = r  x_t (1 - x_t), \ \ \ \ \  t=0, 1, 2, \ldots . 
 \label{logistic}
@@ -562,10 +563,7 @@ When two random variables are independent, their mutual information is $0$.
 We computed the mutual information for the time series in figure \ref{figure1abcd}(a) and figure \ref{figure1abcd}(b).  
 The mutual information for the periodic maps in figure \ref{abcd_combined}(a)  is $0.7522$ and the mutual information for the chaotic maps it $0.471$.   This makes sense because after $t=13$, for the periodic maps, you can certainly determine the value one map by knowing the other.  It also makes sense that the mutual information for the chaotic maps should be close to zero because they are chaotic.  
 
-To compute the mutual information, we produced values that could be binned by multiplying each population size by 100 and rounding to the nearest integer.  Then we used the JIDT AutoAnalyzer \cite{JIDT} to compute the mutual information.    To generate figure \ref{figure1abcd} we used Matlab \cite{Matlab} with logistic map equation from \cite{Mitchell}.  
-
-MISSING {\it From instructions:  You might follow Flake?s suggestion of predicting how far into the future two populations are on the same side of 50\% of carrying capacity and use a binary representation. You might use JIDT?s kernel estimator. Explain your choice. }
-
+To estimate the mutual information, we produced values that could be binned by multiplying each population size by 100 and rounding to the nearest integer.  Then we used the JIDT AutoAnalyzer \cite{JIDT} to compute the mutual information assuming discrete data.  To generate figure \ref{figure1abcd} we used Matlab \cite{Matlab} with logistic map equation from \cite{Mitchell}.  
 
 
 \begin{figure}[H]
@@ -575,6 +573,9 @@ MISSING {\it From instructions:  You might follow Flake?s suggestion of predicti
   \caption{ Population growth over time showing sensitive dependence on initial conditions.  The mutual information for the periodic map (a) is 0.7522.  The mutual information for the chaotic map (b) is 0.0471.}
  \label{figure1abcd}
 \end{figure} 
+To test whether binning the data might be adversely affecting our mutual information estimates and since our data was actually real instead of discrete, we also tried IDT?s kernel estimator to measure the mutual information. 
+Kernel density estimators are a method for estimating probability densities \cite{Moon}. The JIDT kernel estimator assumes the input data is Gaussian and approximates distributions for all the variables based on this assumption.  One can then use the JIDT AutoAnalyzer to calculate the mutual information between the distributions.   Using the kernel estimator, we estimated the mutual information between the periodic maps to be 1.7086 and the mutual information between the chaotic maps to be 0.7192.   Again, this validates what we see in \ref{figure1abcd} because the chaotic maps have less mutual information than the periodic ones.   
+
 
 \subsection{The Walker Model}
 For this project, we used the  model of coupled growth defined in \cite{Walker}. This model uses a logistic growth model on a lattice of populations coupled with influence from the entire population of populations.  For each time step $n$, the size of population $i$ at time step $n$ is defined to be
@@ -633,10 +634,11 @@ While return maps that look like figure \ref{prettypicture} seemed to occur more
 \begin{figure*}[!t]
 \centering
 \subfloat[]{\includegraphics[width=3.5in]{Fig4a}%
-\label{te}}
+\label{te} }
+
 \hfill
 \subfloat[]{\includegraphics[width=3.5in]{Fig4b}%
-\label{fig_second_case}}
+\label{fig_second_case} }
 \caption{(a) Top-down, $T_{M\rightarrow X}$ (solid), and bottom-up, $T_{X\rightarrow M}$ (dashed), causal information transfer as a function of the global coupling parameter $\epsilon$ for coupled logistic maps. (b) The difference (Top-down minus bottom-up) in causal information transfer for $30$ coupled systems as well as the mean as a function of $\epsilon$ (dashed). Vertical line at $\epsilon = 0.3$ illustrates the directional reversal of causal information transfer.}
 \label{te_avg}
 \end{figure*}
@@ -710,6 +712,10 @@ While each of us touched all sections of this paper, Vanessa Job was the primary
 
 \bibitem{matplotlib} Hunter, J.D. {\t Matplotlib: A 2D graphics environment}.  {\it Computing in Science and Engineering}, Vol. 0, Num. 3, pp 90-95.  (2007)[Online]
 Available: https://matplotlib.org
+
+\bibitem{moon}
+Moon, Young-Il, Balaji Rajagopalan, and Upmanu Lall.  Estimation of mutual information using kernel density estimators.  {\it Physical Review E}, Volume 52, Number 3, September 1995.  
+
 
 \bibitem{Schreiber} FILL THIS IN
 
