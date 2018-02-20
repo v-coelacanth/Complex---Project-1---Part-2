@@ -56,11 +56,14 @@
 \usepackage{graphicx}	
 \usepackage{epstopdf}
 \usepackage{color}
-\usepackage{subcaption}
+%\usepackage{subcaption}
  \usepackage{float}
  \usepackage{wrapfig}
- 
-
+\ifCLASSOPTIONcompsoc
+  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\else
+  \usepackage[caption=false,font=footnotesize]{subfig}
+\fi
 
 
 % Some Computer Society conferences also require the compsoc mode option,
@@ -346,7 +349,7 @@ vjob@unm.edu}
 \IEEEauthorblockN{Kellin Rumsey}
 \IEEEauthorblockA{Department of Mathematics and Statistics\\
 University of New Mexico\\
-PUT IN KELLIN'S Email}
+knrumsey@unm.edu}
 }
 
 % conference papers do not typically use \thanks and this command
@@ -408,12 +411,10 @@ The abstract goes here.
 
 \section{Introduction}
 % no \IEEEPARstart
+\noindent Evolution proceeds by emergence of new higher level entities.   How information is stored and processed is a driver of this process \cite{Walker}.   For instance, the emergence of epigenetic inheritance provided a competitive advantage through diversification.  
+In this paper, we look at the interaction between organisms as individual  populations and organisms considered as a group of populations. \\ 
 
-{\bf Introduction } 
-Evolution proceeds by emergence of new higher level entities.   How information is stored and processed is a driver of this process \cite{Walker}.   For instance, the emergence of epigenetic inheritance provided a competitive advantage through diversification.  
-In this paper, we look at the interaction between organisms as individual  populations and organisms considered as a group of populations. 
-
-For individual populations, we assume birth rate, death rate, and  carrying capacity are all fixed.  Define $k$ to be the carrying capacity of a population and $n_t$ to be size of the population at time $t$. Then the size of the population at generation $t$ is modeled by 
+\noindent For individual populations, we assume birth rate, death rate, and  carrying capacity are all fixed.  Define $k$ to be the carrying capacity of a population and $n_t$ to be size of the population at time $t$. Then the size of the population at generation $t$ is modeled by 
 \begin{eqnarray}
 n_{t+1} = (\textnormal{birthrate} - \textnormal{deathrate}) (k n_t - n_t^2) / k 
 \end{eqnarray}
@@ -628,8 +629,26 @@ It should be noted that there is quite a bit of dependence on the initial fitnes
 %\end{figure} 
 
 While return maps that look like figure \ref{prettypicture} seemed to occur more often, it would be interesting to look at the distributions of fitness values $r_i$ that produce the more exotic return maps.  This is outside of the scope of this paper.
+\begin{figure*}[!t]
+\centering
+\subfloat[]{\includegraphics[width=3.5in]{Fig4a}%
+\label{te}}
+\hfill
+\subfloat[]{\includegraphics[width=3.5in]{Fig4b}%
+\label{fig_second_case}}
+\caption{Simulation results for the network.}
+\label{te_avg}
+\end{figure*}
+\subsection{Direction of Information Flow}
+\noindent In order to assess that direction of information flow, from Global to Local scales and vice versa, the authors in \cite{Walker} take advantage of {\it Transfer Entropy}. Transfer Entropy is defined mathematically in \cite{Schreiber} as
+$$T^{(k)}_{Y \rightarrow X} = \sum_n p(x_{n+1}, x_n^{(k)}, y_n^{(k)}) \log \left[ \frac{p(x_{n+1}|x_n^{(k)}, y_n^{(k)})}{p(x_{n+1}|x_n{(k)}}\right]$$
+Where $x_n^{(k)}$ is an embedded state in the $k$-dimensional phase spate defined as $x_n^{(k)} = (x_n, \cdots, x_{n-k+1})$. \\
 
 
+
+\noindent Although Transfer Entropy is a fine candidate to estimate directionality of this coupling, recent work has focused on improving estimation methods. In their 2015 paper, Gencaga et. al propose new "statistically robust" methodology to estimate Transfer Entropy \cite{recipe}. Relevant here, is the considerable improvement for continuous processes, where discretizing the data can lead to a distortion in the underlying probability distribution. For this reason, we choose to use the state of the art TransferEntropy package in R and claim based on this work that these estimates of Transfer Entropy are to be preferred. \\
+
+\noindent In Figure \ref{te}, we see qualitatively similar results as to what was demonstrated in \cite{Walker}. The quantitative difference in the location and magnitude of the peaks can be attributed to either chance or estimation method. For low values of the global coupling parameter ($\epsilon$), we see information flow is stronger in the bottom-down direction (from local to global scale). As $\epsilon$ increases the direction reverses, and top-down causation begins to dominate. We note again that we are qualitatively in agreement with the previous work \cite{Walker}. There is however a subtle quantitative difference in our results. It appears from Figure \ref{te} that this reversal of causation occurs at a value of $\epsilon = 0.3$. In an effort to analyze this claim more rigorously, we repeat the entire simulation and estimation procedure $30$ times. The right panel of Figure \ref{te_avg} shows the difference $T_{M\rightarrow X} - T_{X \rightarrow M}$ as a function of $\epsilon$ for 30 different simulations. The mean is also plotted, and we can see clearly that this reversal of information flow occurs right at $\epsilon = 0.3$.
 
 
 
@@ -684,11 +703,16 @@ While each of us touched all sections of this paper, Vanessa Job was the primary
 
 \bibitem{Flake} G. Flake, The computational beauty of nature. Cambridge, Mass.:{\it  The MIT Press}, 2011, pp. 139-151.
 
-\bibitem{numpy} Stéfan van der Walt, S. Chris Colbert and Gaël Varoquaux. The NumPy Array: A Structure for Efficient Numerical Computation, {\it Computing in Science and Engineering,} 13, 22-30 (2011),
+\bibitem{numpy} Stï¿½fan van der Walt, S. Chris Colbert and Gaï¿½l Varoquaux. The NumPy Array: A Structure for Efficient Numerical Computation, {\it Computing in Science and Engineering,} 13, 22-30 (2011),
 
 \bibitem{matplotlib} Hunter, J.D. {\t Matplotlib: A 2D graphics environment}.  {\it Computing in Science and Engineering}, Vol. 0, Num. 3, pp 90-95.  (2007)[Online]
 Available: https://matplotlib.org
 
+\bibitem{Schreiber} FILL THIS IN
+
+\bibitem{TE} FILL THIS IN
+
+\bibitem{recipe} FILL THIS IN
 \end{thebibliography}
 
 
